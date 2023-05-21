@@ -25,6 +25,8 @@ This project currently aims at teaching me Rust (and maybe some gamedev) in a mo
 ### This is a collection of things i realize might need to change later to accomodate more advanced functionality
 
 - Make it so that we can accept non-square room shapes and implement an algorithm to rotate the room arrays in order to make more interesting room shapes that can be rotated (long corridor room type for example)
+- The loop on the random room selecter on add_room() function on world_gen could and probably will eventually get stuck at some point due do not finding
+any valid room with open slots to attatch, but i can't think of a good solution to it right now so it's going to stay that way
 
 
 ## Ideas for (probably much) later

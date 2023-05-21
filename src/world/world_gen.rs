@@ -31,7 +31,7 @@ impl FloorMap
 
 		if self.rooms.capacity() == 0
 		{
-			let middle_coord = [self.tile_vector.len()/2,self.tile_vector[0].len()/2];
+			let middle_coord = [self.tile_vector[0].len()/2,self.tile_vector.len()/2];
 			room = Self::match_room_type(room_type, middle_coord[0],middle_coord[1],room);
 
 			self.add_tiles_to_world(&room);
@@ -59,16 +59,21 @@ impl FloorMap
 
 			match direction
 			{
-				Some('N') => room = Self::match_room_type(room_type,cord_x+16,cord_y,room),
-				Some('E') => room = Self::match_room_type(room_type,cord_x,cord_y+16,room),
-				Some('S') => room = Self::match_room_type(room_type,cord_x-16,cord_y,room),
-				Some('W') => room = Self::match_room_type(room_type,cord_x,cord_y-16,room),
+				Some('N') => room = Self::match_room_type(room_type,cord_x,cord_y+16,room),
+				Some('E') => room = Self::match_room_type(room_type,cord_x+16,cord_y,room),
+				Some('S') => room = Self::match_room_type(room_type,cord_x,cord_y-16,room),
+				Some('W') => room = Self::match_room_type(room_type,cord_x-16,cord_y,room),
 				_ => panic!("There should never be a situation where we have a room that doesn't match at this depth!")
 			}
 
 			self.add_tiles_to_world(&room);
 			let mut room_list: Vec<Room> = [room].to_vec();
 			self.rooms.append(&mut room_list);
+			self.rooms.iter().for_each(|x|
+			{
+				println!("{:?}",x.bounds);
+			})
+			
 		}
 	}
 
@@ -96,11 +101,11 @@ impl FloorMap
 			{
 				available_room_slots = available_room_slots.replace("N","");
 			}
-			if room.bounds[0][0] == room_x+31 && room.bounds[0][1] == room_y
+			if room.bounds[0][0] == room_x+16 && room.bounds[0][1] == room_y
 			{
 				available_room_slots = available_room_slots.replace("E","");
 			}
-			if room.bounds[0][0] == room_x && room.bounds[0][1] == room_y-31
+			if room.bounds[0][0] == room_x && room.bounds[0][1] == room_y-16
 			{
 				available_room_slots = available_room_slots.replace("S","");
 			}

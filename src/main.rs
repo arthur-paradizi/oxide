@@ -7,7 +7,7 @@ fn main()
 	
 	let grid_size = get_grid_size();
 	let mut world = world_gen::world_gen(grid_size,grid_size);
-	for _n in 0..get_room_amount()
+	for _n in 0..get_room_amount()-1
 	{
 		world.add_room("empty");
 	}
@@ -19,7 +19,7 @@ fn main()
 			{
 				match tile.name.as_str() {
 					"Wall" => print!("|"),
-					"Floor" => print!("{}", ' '),
+					"Floor" => print!("x"),
 					_ => print!("{}", ' '),
 				};
 			});

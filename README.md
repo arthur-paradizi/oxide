@@ -21,6 +21,12 @@ This project currently aims at teaching me Rust (and maybe some gamedev) in a mo
 - Add items/collectables in the map (start with a simple victory condition type of thing, then probably implement an inventory feature and start doing more advanced logic around items)
 - Implement a turn-based way of running the game (potentially huge issue here is how do you define priority of action? My initial brainstormed idea is to implement an action speed modifier to every entity in the game that can take action, sort the entity list by said action speed, then compute them on that order, i'm not sure how much of a terrible idea this is but it has to be explored)
 
+## Technical ToDo list
+### This is a collection of things i realize might need to change later to accomodate more advanced functionality
+
+- Make it so that we can accept non-square room shapes and implement an algorithm to rotate the room arrays in order to make more interesting room shapes that can be rotated (long corridor room type for example)
+
+
 ## Ideas for (probably much) later
 - Create a noise system that also is going to be used alongside the basic LoS algorithm for entities to detect your presence
 - Inventory system

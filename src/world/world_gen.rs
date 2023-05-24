@@ -18,7 +18,7 @@ impl FloorMap
 	{
 		return FloorMap
 		{	
-			tile_vector: vec![vec![Tile {name: "Floor".to_string(), _is_walkable: true}; height]; lenght],
+			tile_vector: vec![vec![Tile {name: "Floor".to_string(), is_walkable: true}; height]; lenght],
 			_floor_number: floor_number,
 			_entity_count: 0,
 			rooms: Vec::new()
@@ -40,7 +40,8 @@ impl FloorMap
 			self.rooms.append(&mut room_list);
 
 		}
-		else {
+		else
+		{
 			let mut available_room_slots = "".to_string();
 			let mut cord_x = 0;
 			let mut cord_y = 0;
@@ -86,7 +87,7 @@ impl FloorMap
 		{
 			if coords.len() == 2
 			{
-				self.tile_vector[coords[0]][coords[1]] = Tile {name: "Wall".to_string(), _is_walkable: false};
+				self.tile_vector[coords[0]][coords[1]] = Tile {name: "Wall".to_string(), is_walkable: false};
 	        }
 		}
 	}

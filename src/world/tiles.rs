@@ -2,7 +2,7 @@
 pub struct Tile
 {
 	pub name: String,
-	pub _is_walkable: bool,
+	pub is_walkable: bool,
 	//there should be an entities contained vector here
 	//implement after entity implementation
 

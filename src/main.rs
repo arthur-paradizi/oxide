@@ -19,7 +19,7 @@ fn main()
 			{
 				match tile.name.as_str() {
 					"Wall" => print!("|"),
-					"Floor" => print!("x"),
+					"Floor" => print!("{}",' '),
 					_ => print!("{}", ' '),
 				};
 			});

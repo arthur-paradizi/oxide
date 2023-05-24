@@ -2,6 +2,7 @@ use crate::world::tiles::Tile;
 use crate::world::tiles::Room;
 use rand::prelude::*;
 
+#[derive(Debug,Clone)]
 pub struct FloorMap
 {
 	pub tile_vector: Vec<Vec<Tile>>,

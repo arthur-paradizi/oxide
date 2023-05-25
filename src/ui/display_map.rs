@@ -1,17 +1,19 @@
+use crate::world::world_gen::FloorMap;
 use crate::entities::player::Player;
+use crate::entities::entity::Entity;
 
-fn terminal_display(player: Player)
+pub fn terminal_display(player: &Player, current_floor: &FloorMap)
 {
     let mut viewport_top = [0,0];
 
-    player.pos.iter().enumerate().for_each(|(pos, coord)|
+    player.position.iter().enumerate().for_each(|(pos, coord)|
     {
         if coord < &7
         {
             viewport_top[pos] = 0;
             return;
         }
-        if coord + 7 > player.current_floor.tile_vector[0].len() -1
+        if coord + 7 > current_floor.tile_vector[0].len() -1
         {
             viewport_top[pos] = 0;
             return;
@@ -23,15 +25,28 @@ fn terminal_display(player: Player)
     {
         for y in 0..15
         {
-            match player.current_floor.tile_vector[x][y].name.as_str()
-            {
-                "Floor" => print!("{}", ' '),
-                "Wall" => print!("{}", ' '),
-                _ => panic!("Tile has no name!")
-            }
-            print!("");
+            floor_rendering(&current_floor, x, y);
+        }
+        println!("");
+    }
+}
+
+fn floor_rendering(current_floor: &FloorMap, x: usize, y: usize)
+{
+    if current_floor.tile_vector[x][y].entities.len() > 0
+    {
+        match &current_floor.tile_vector[x][y].entities[0] {
+            Entity::Player(_) => print!("@"),
+            Entity::Monster(_) => print!("M")
         }
     }
-
-
+    else
+    {
+        match current_floor.tile_vector[x][y].name.as_str()
+        {
+            "Floor" => print!("{}", ' '),
+            "Wall" => print!("{}", "|"),
+            _ => panic!("Tile has no name!")
+        }
+    }
 }

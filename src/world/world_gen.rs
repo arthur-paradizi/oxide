@@ -1,27 +1,30 @@
+use crate::entities::entity::SetPosition;
+use crate::entities::player::Player;
 use crate::world::tiles::Tile;
 use crate::world::tiles::Room;
+use crate::entities::entity::Entity;
 use rand::prelude::*;
 
-#[derive(Debug,Clone)]
-pub struct FloorMap
+#[derive(Clone,Debug)]
+pub struct FloorMap<'a>
 {
-	pub tile_vector: Vec<Vec<Tile>>,
+	pub tile_vector: Vec<Vec<Tile<'a>>>,
 	pub _floor_number: i32,
-	pub _entity_count: i32,
 	pub rooms: Vec<Room>,
+	pub entities: Vec<Entity>,
 
 }
 
-impl FloorMap
+impl FloorMap<'_>
 {
-	fn init_floor(height: usize, lenght: usize, floor_number: i32) -> FloorMap
+	fn init_floor(height: usize, lenght: usize, floor_number: i32) -> FloorMap<'static>
 	{
 		return FloorMap
 		{	
-			tile_vector: vec![vec![Tile {name: "Floor".to_string(), is_walkable: true}; height]; lenght],
+			tile_vector: vec![vec![Tile {name: "Floor".to_string(), is_walkable: true, entities: Vec::new()}; height]; lenght],
 			_floor_number: floor_number,
-			_entity_count: 0,
-			rooms: Vec::new()
+			rooms: Vec::new(),
+			entities: Vec::new()
 		}
 		
 	}
@@ -87,7 +90,7 @@ impl FloorMap
 		{
 			if coords.len() == 2
 			{
-				self.tile_vector[coords[0]][coords[1]] = Tile {name: "Wall".to_string(), is_walkable: false};
+				self.tile_vector[coords[0]][coords[1]] = Tile {name: "Wall".to_string(), is_walkable: false, entities: Vec::new()};
 	        }
 		}
 	}
@@ -130,10 +133,23 @@ impl FloorMap
 		};
 		return room;
 	}
+
+	pub fn add_entity(&mut self, entity: Entity)
+	{
+		self.entities.push(entity);
+		if let Entity::Player(player_ref) = &world.entities[0]
+		{
+	        player = player_ref;
+	    }
+	}
 }
 
-pub fn world_gen(height: usize, lenght: usize) -> FloorMap
+pub fn world_gen(height: usize, lenght: usize, mut player: Player) -> FloorMap<'static>
 {	
-	let world = FloorMap::init_floor(height, lenght, 0);
+	let mut world = FloorMap::init_floor(height, lenght, 0);
+	let x = (world.tile_vector[0].len()/2)+2;
+	let y = (world.tile_vector.len()/2)+2;
+	player.set_pos([x,y]);
+	world.add_entity(Entity::Player(player));
 	return world;
 }

@@ -1,10 +1,11 @@
-#[derive(Debug,Clone)]
-pub struct Tile
+use crate::entities::entity::Entity;
+
+#[derive(Clone,Debug)]
+pub struct Tile<'a>
 {
 	pub name: String,
 	pub is_walkable: bool,
-	//there should be an entities contained vector here
-	//implement after entity implementation
+	pub entities: Vec<&'a Entity>
 
 }
 
